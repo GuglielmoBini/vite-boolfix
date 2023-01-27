@@ -1,25 +1,29 @@
 <script>
 import { store } from '../data/store';
+import titlesCard from './titles/titlesCard.vue';
 export default {
     name: 'AppMain',
     data() {
         return { store }
-    }
+    },
+    components: { titlesCard }
 }
 </script>
 
 <template>
-    <main class="container d-flex flex-column align-items-center">
-        <ul class="my-5 w-50" v-for="movie in store.movies" :key="movie.id">
-            <li>Titolo: {{ movie.title }}</li>
-            <li>Titolo originale: {{ movie.original_title }}</li>
-            <li>Lingua: {{ movie.original_language }}</li>
-            <li>Voto: {{ movie.vote_average }}</li>
-            <li>Trama: {{ movie.overview }}</li>
-        </ul>
+    <main class="container">
+        <section>
+            <h2>Movies</h2>
+            <titles-card v-for="movie in store.movies" :key="movie.id" :item="movie"></titles-card>
+        </section>
+        <section>
+            <h2>Series</h2>
+            <titles-card v-for="serie in store.series" :key="serie.id" :item="serie"></titles-card>
+        </section>
     </main>
 </template>
 
 <style lang="scss" scoped>
 
 </style>
+

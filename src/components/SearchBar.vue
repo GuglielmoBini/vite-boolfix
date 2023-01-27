@@ -3,19 +3,19 @@ export default {
     name: 'SearchBar',
     data() {
         return {
-            searchTerm: ''
+            term: ''
         }
     },
-    emits: ['search']
+    emits: ['term-change', 'form-submit']
 }
 </script>
 
 <template>
-    <div class="input-group w-25 my-5">
-        <input class="form-control" type="text" placeholder="cerca..." v-model.trim="searchTerm"
-            @keyup.enter="$emit('search', searchTerm)">
-        <button class="btn btn-primary" type="button" @click="$emit('search', searchTerm)">Cerca</button>
-    </div>
+    <form class="input-group w-25 my-5" @submit.prevent="$emit('form-submit')">
+        <input class="form-control" type="text" placeholder="cerca..." v-model.trim="term"
+            @keyup="$emit('term-change', term)">
+        <button class="btn btn-danger" type="submit">Cerca</button>
+    </form>
 </template>
 
 <style lang="scss" scoped>

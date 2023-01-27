@@ -1,24 +1,37 @@
 <script>
 import axios from 'axios';
 import { store } from './data/store';
-import { baseUri, apiKey } from './data';
+import { baseUri, apiKey, language } from './data';
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
 export default {
   name: 'Boolfix',
   data() {
-    return { store }
+    return { store, searchWord: '' }
+  },
+  computed: {
+    config() {
+      return {
+        params: {
+          language: language,
+          api_key: apiKey,
+          query: this.searchWord
+        }
+      }
+    }
   },
   methods: {
-    fetchMovies(query) {
-      axios.get(`${baseUri}/search/movie?api_key=${apiKey}&query=${query}`)
-        .then(res => {
-          const movies = res.data.results
-          store.movies = movies.map(movie => {
-            const { id, title, original_title, original_language, vote_average, overview, poster_path } = movie;
-            return { id, title, original_title, original_language, vote_average, overview, poster_path }
-          })
-        })
+    updateTitleFilter(term) {
+      this.searchWord = term
+    },
+    searchTitles() {
+      this.fetchApi('search/movie', 'movies')
+      this.fetchApi('search/tv', 'series')
+    },
+    fetchApi(endpoint, collection) {
+      axios.get(`${baseUri}/${endpoint}`, this.config)
+        .then(res => { store[collection] = res.data.results })
+        .catch(err => { console.error(err) })
     }
   },
   components: { AppHeader, AppMain }
@@ -26,7 +39,7 @@ export default {
 </script>
 
 <template>
-  <app-header @searched-term="fetchMovies"></app-header>
+  <app-header @searched-term="updateTitleFilter" @form-submitted="searchTitles"></app-header>
   <app-main></app-main>
 </template>
 
