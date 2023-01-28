@@ -1,5 +1,16 @@
 import { createApp } from "vue";
-import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App.vue";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+library.add(faStar);
 
-createApp(App).mount("#app");
+// inizializzo app
+const app = createApp(App);
+
+// registro i componenti globali
+app.component("font-awesome-icon", FontAwesomeIcon);
+
+// monto app nel dom
+app.mount("#app");
