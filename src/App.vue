@@ -25,6 +25,12 @@ export default {
       this.searchWord = term
     },
     searchTitles() {
+      if (!this.searchWord) {
+        store.movies = [];
+        store.series = [];
+        return
+      }
+
       this.fetchApi('search/movie', 'movies')
       this.fetchApi('search/tv', 'series')
     },
