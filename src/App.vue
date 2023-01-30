@@ -35,9 +35,13 @@ export default {
       this.fetchApi('search/tv', 'series')
     },
     fetchApi(endpoint, collection) {
+      store.isLoading = true
       axios.get(`${baseUri}/${endpoint}`, this.config)
         .then(res => { store[collection] = res.data.results })
         .catch(err => { console.error(err) })
+        .then(() => {
+          store.isLoading = false
+        })
     }
   },
   components: { AppHeader, AppMain }
