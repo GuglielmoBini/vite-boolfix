@@ -2,9 +2,10 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
+import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faStar);
+library.add(regularStar, solidStar);
 
 // inizializzo app
 const app = createApp(App);
