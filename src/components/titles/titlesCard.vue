@@ -35,7 +35,7 @@ export default {
         <figure class="poster h-100 m-0">
             <img class="img-fluid h-100" :src="createImg" :alt="item.original_title || item.original_name">
         </figure>
-        <div class="title-info text-center p-3">
+        <div class="title-info p-3">
             <div>Titolo: {{ item.title || item.name }}</div>
             <div>Titolo originale: {{ item.original_title || item.original_name }}</div>
             <div class="my-2">
@@ -60,22 +60,27 @@ export default {
     height: 513px;
     width: 342px;
     position: relative;
+    box-shadow: 0;
+    transition: box-shadow 0.5s;
+
+    &:hover {
+        box-shadow: 0 0 10px 3px lightgrey;
+    }
 
     .poster>img {
-        border-radius: 10px;
         object-fit: cover;
     }
 
     .title-info {
         opacity: 0;
-        border-radius: 10px;
+        text-shadow: 0 0 5px black;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba($color: black, $alpha: 0.6);
         transition: opacity 0.5s;
+        background-color: rgba($color: black, $alpha: 0.8);
 
 
         &:hover {
@@ -95,5 +100,11 @@ export default {
         }
 
     }
+}
+
+.title-card,
+.title-info,
+.poster>img {
+    border-radius: 10px;
 }
 </style>
