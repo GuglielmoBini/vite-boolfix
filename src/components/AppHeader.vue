@@ -1,4 +1,5 @@
 <script>
+// importo
 import SearchBar from './SearchBar.vue';
 export default {
     name: 'AppHeader',
@@ -8,9 +9,11 @@ export default {
 </script>
 
 <template>
+    <!-- HEADER -->
     <header class="container-fluid">
         <div class="d-flex justify-content-between align-items-center h-100 mx-4">
             <h1 class="text-danger">BOOLFLIX</h1>
+            <!-- barra di ricerca -->
             <search-bar @term-change="$emit('searched-term', $event)" @form-submit="$emit('form-submitted', $event)">
             </search-bar>
         </div>

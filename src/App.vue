@@ -1,4 +1,5 @@
 <script>
+// importo
 import axios from 'axios';
 import { store } from './data/store';
 import { baseUri, apiKey, language } from './data';
@@ -21,10 +22,12 @@ export default {
     }
   },
   methods: {
+    // aggiorno filtro titoli
     updateTitleFilter(term) {
       this.searchWord = term
     },
     searchTitles() {
+      //chiamo API e cerco titoli
       if (!this.searchWord) {
         store.movies = [];
         store.series = [];
@@ -35,6 +38,7 @@ export default {
       this.fetchApi('search/tv', 'series')
     },
     fetchApi(endpoint, collection) {
+      // funzione per cercare titoli
       store.isLoading = true
       axios.get(`${baseUri}/${endpoint}`, this.config)
         .then(res => { store[collection] = res.data.results })

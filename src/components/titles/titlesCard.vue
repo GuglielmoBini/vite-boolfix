@@ -1,4 +1,5 @@
 <script>
+//importo
 import { baseImgUri } from '../../data';
 export default {
     name: 'titlesCard',
@@ -7,14 +8,17 @@ export default {
     },
     computed: {
         hasFlag() {
+            // flag per stampare bandiere
             const flags = ['it', 'en'];
             return flags.includes(this.item.original_language)
         },
         flagSrc() {
+            // costruisco url immagine
             const url = new URL(`../../assets/img/${this.item.original_language}.png`, import.meta.url);
             return url.href;
         },
         createImg() {
+            // creo poster
             let poster = '';
             if (this.item.poster_path) {
                 poster = `${baseImgUri}${this.item.poster_path}`;
@@ -24,6 +28,7 @@ export default {
             return poster
         },
         dividedVote() {
+            // divido voto medio
             return Math.floor(this.item.vote_average / 2);
         }
     }
@@ -32,9 +37,11 @@ export default {
 
 <template>
     <div class="title-card flex-shrink-0 m-2">
+        <!-- poster -->
         <figure class="poster h-100 m-0">
             <img class="img-fluid h-100" :src="createImg" :alt="item.original_title || item.original_name">
         </figure>
+        <!-- info titolo -->
         <div class="title-info p-3">
             <div>Titolo: {{ item.title || item.name }}</div>
             <div>Titolo originale: {{ item.original_title || item.original_name }}</div>
@@ -56,6 +63,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+// card
 .title-card {
     height: 513px;
     width: 342px;
@@ -67,10 +75,12 @@ export default {
         box-shadow: 0 0 10px 3px lightgrey;
     }
 
+    // poster
     .poster>img {
         object-fit: cover;
     }
 
+    // info titolo
     .title-info {
         opacity: 0;
         text-shadow: 0 0 5px black;

@@ -1,6 +1,7 @@
 <script>
+//importo
 import { store } from '../../data/store';
-import titlesCard from './TitlesCard.vue';
+import TitlesCard from './TitlesCard.vue';
 export default {
     name: 'titlesSection',
     data() {
@@ -10,7 +11,7 @@ export default {
         title: String,
         collection: String
     },
-    components: { titlesCard }
+    components: { TitlesCard }
 }
 </script>
 
@@ -18,6 +19,7 @@ export default {
     <section :id="collection">
         <h2 class="m-5">{{ title }}</h2>
         <div class="d-flex flex-wrap justify-content-center">
+            <!-- card -->
             <titles-card v-for="prod in store[collection]" :key="prod.id" :item="prod"></titles-card>
         </div>
     </section>
