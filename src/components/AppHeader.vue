@@ -8,14 +8,23 @@ export default {
 </script>
 
 <template>
-    <header class="d-flex justify-content-center">
-        <search-bar @term-change="$emit('searched-term', $event)"
-            @form-submit="$emit('form-submitted', $event)"></search-bar>
+    <header class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center h-100 mx-4">
+            <h1 class="text-danger">BOOLFLIX</h1>
+            <search-bar @term-change="$emit('searched-term', $event)" @form-submit="$emit('form-submitted', $event)">
+            </search-bar>
+        </div>
     </header>
 </template>
 
 <style lang="scss" scoped>
 header {
+    height: 130px;
     background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
 }
 </style>

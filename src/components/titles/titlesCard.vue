@@ -5,18 +5,6 @@ export default {
     props: {
         item: Object
     },
-    methods: {
-        changeVoteToStar(vote) {
-            const dividedVote = Math.floor(vote / 2);
-            let stars = '';
-            if (dividedVote) {
-                for (let i = 0; i < dividedVote; i++) {
-                    stars += `<i class="fa-solid fa-star text-warning"></i>`;
-                }
-            } else { stars = 'Nessun voto' }
-            return stars
-        }
-    },
     computed: {
         hasFlag() {
             const flags = ['it', 'en'];
@@ -27,39 +15,85 @@ export default {
             return url.href;
         },
         createImg() {
-            const poster = `${baseImgUri}${this.item.poster_path}`;
+            let poster = '';
+            if (this.item.poster_path) {
+                poster = `${baseImgUri}${this.item.poster_path}`;
+            } else {
+                poster = 'src/assets/img/img-no.png';
+            }
             return poster
+        },
+        dividedVote() {
+            return Math.floor(this.item.vote_average / 2);
         }
     }
 }
 </script>
 
 <template>
-    <ul class="my-5 w-50 text-center">
-        <li>Titolo: {{ item.title || item.name }}</li>
-        <li>Titolo originale: {{ item.original_title || item.original_name }}</li>
-        <li>
-            <span>Lingua: </span>
-            <img class="flag" v-if="hasFlag" :src="flagSrc" :alt="item.original_language">
-            <span v-else>{{ item.original_language }}</span>
-        </li>
-        <li v-html="changeVoteToStar(item.vote_average)"></li>
-        <li>Trama: {{ item.overview }}</li>
-        <li>
-            <img v-if="item.poster_path" class="poster" :src="createImg"
-                :alt="item.original_title || item.original_name">
-        </li>
-    </ul>
+    <div class="title-card flex-shrink-0 m-2">
+        <figure class="poster h-100 m-0">
+            <img class="img-fluid h-100" :src="createImg" :alt="item.original_title || item.original_name">
+        </figure>
+        <div class="title-info text-center p-3">
+            <div>Titolo: {{ item.title || item.name }}</div>
+            <div>Titolo originale: {{ item.original_title || item.original_name }}</div>
+            <div class="my-2">
+                <span>Lingua: </span>
+                <img class="flag" v-if="hasFlag" :src="flagSrc" :alt="item.original_language">
+                <span v-else>{{ item.original_language }}</span>
+            </div>
+            <div class="my-3">
+                <i v-for="i in 5" :class="i <= dividedVote ? 'fa-solid text-warning' : 'fa-regular'"
+                    class="fa-star"></i>
+            </div>
+            <div v-if="item.overview" class="overview">
+                <span>Trama:</span>
+                <p>{{ item.overview }}</p>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style lang="scss" scoped>
-ul {
-    list-style-type: none;
+.title-card {
+    height: 513px;
+    width: 342px;
+    position: relative;
+
+    .poster>img {
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .title-info {
+        opacity: 0;
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba($color: black, $alpha: 0.6);
+        transition: opacity 0.5s;
 
 
-}
+        &:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
 
-.flag {
-    max-width: 50px;
+        .flag {
+            width: 40px;
+            height: 20px;
+            object-fit: cover;
+        }
+
+        .overview {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+    }
 }
 </style>
